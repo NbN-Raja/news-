@@ -69,24 +69,19 @@ if ($result->num_rows > 0) {
   <!-- Google Translater -->
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 </head>
 
 <body style="padding:0">
-
   <!-- Navigation -->
   <?php include('includes/header.php'); ?>
-
   <!-- Page Content -->
   <div class="container">
-
-
-
     <div class="row" style="margin-top: 4%">
 
       <!-- Blog Entries Column -->
-      <div class="col-md-8">
-
+      <div class="col-md">
         <!-- Blog Post -->
         <?php
         $pid = intval($_GET['nid']);
@@ -94,76 +89,91 @@ if ($result->num_rows > 0) {
         $query = mysqli_query($con, "select tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url,tblposts.postedBy,tblposts.lastUpdatedBy,tblposts.UpdationDate from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.id='$pid'");
         while ($row = mysqli_fetch_array($query)) {
         ?>
+          <div class="container shadow p-4 text-dark">
+            <div class="">
+              <h2 class=""><?php echo htmlentities($row['posttitle']); ?></h2>
+              <div class="d-flex justify-content-between" style="width: 12pc; right: 15pc; font-weight: 900;">
+                <hr class="font-weight-bold">
+              </div>
+              <p>
+                <div class="d-flex">
+                <b class="d-inline-block rounded-circle bg-dark text-red" style="width: 36px; height: 36px;"></b>
+                <p class="font-bold ml-2 text-bold fw-bold text-uppercase" style="font-weight: 700;"><?php echo htmlentities($row['postedBy']); ?> <br> <?php echo htmlentities($row['postingdate']); ?> <br>
+                Views:<?php print $visits; ?></p>
+                
 
-          <div class="card mb-4">
 
-            <div class="card-body">
-              <h2 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h2>
+                <div class="mr-10" style="    margin-left: 17pc;">
+  <!-- Facebook -->
+  <a style="color: #3b5998; font-size: 30px; height: 40px; width: 40px;" href="#!" role="button">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+
+  <!-- Twitter -->
+  <a style="color: #55acee; font-size: 30px; height: 40px; width: 40px;" href="#!" role="button">
+    <i class="fab fa-twitter"></i>
+  </a>
+
+  <!-- Google -->
+  <a style="color: #dd4b39; font-size: 30px; height: 40px; width: 40px;" href="#!" role="button">
+    <i class="fab fa-google"></i>
+  </a>
+
+  <!-- Instagram -->
+  <a style="color: #ac2bac; font-size: 30px; height: 40px; width: 40px;" href="#!" role="button">
+    <i class="fab fa-instagram"></i>
+  </a>
+
+</div>
+
+        </div>
+     
+                <?php if ($row['lastUpdatedBy'] != '') : ?>
+                  
+                <?php endif; ?>
+              </p>
+              <p>
+              </p>
+              <hr />
+              <img class="img-fluid rounded" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>">
+              <p class="card-text bold">
+                <?php
+                $pt = $row['postdetails'];
+                echo (substr($pt, 0));
+                ?>
+              </p>
+            </div>
+            <div class="card-footer text-muted">
               <!--category-->
               <a class="badge bg-secondary text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
               <!--Subcategory--->
               <a class="badge bg-secondary text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
-
-
-              <p>
-
-                <b>Posted by </b> <?php echo htmlentities($row['postedBy']); ?> on </b><?php echo htmlentities($row['postingdate']); ?> |
-                <?php if ($row['lastUpdatedBy'] != '') : ?>
-                  <b>Last Updated by </b> <?php echo htmlentities($row['lastUpdatedBy']); ?> on </b><?php echo htmlentities($row['UpdationDate']); ?>
-              </p>
-            <?php endif; ?>
-            <p><strong>Share:</strong> <a href="http://www.facebook.com/share.php?u=<?php echo $currenturl; ?>" target="_blank">Facebook</a> |
-              <a href="https://twitter.com/share?url=<?php echo $currenturl; ?>" target="_blank">Twitter</a> |
-              <a href="https://web.whatsapp.com/send?text=<?php echo $currenturl; ?>" target="_blank">Whatsapp</a> |
-              <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo $currenturl; ?>" target="_blank">Linkedin</a>
-
-              <b>Visits:</b> <?php print $visits; ?>
-            </p>
-            <hr />
-
-            <img class="img-fluid rounded" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>">
-
-            <p class="card-text"><?php
-                                  $pt = $row['postdetails'];
-                                  echo (substr($pt, 0)); ?></p>
-
-            </div>
-            <div class="card-footer text-muted">
-
-
             </div>
           </div>
         <?php } ?>
-
-
-
-
-
-
       </div>
 
       <!-- Sidebar Widgets Column -->
+      <!-- Side bar  -->
       <?php include('includes/sidebar.php'); ?>
+
     </div>
     <!-- /.row -->
-    <!---Comment Section --->
 
-    <div class="row" style="margin-top: -8%">
+    <!---Comment Section --->
+    <div class="row">
       <div class="col-md-8">
         <div class="card my-4">
           <h5 class="card-header">Leave a Comment:</h5>
-          <div class="card-body">
+          <div class="card-body shadow">
             <form name="Comment" method="post">
               <input type="hidden" name="csrftoken" value="<?php echo htmlentities($_SESSION['token']); ?>" />
               <div class="form-group">
                 <input type="text" name="name" class="form-control" placeholder="Enter your fullname" required>
               </div>
-
               <div class="form-group">
                 <input type="email" name="email" class="form-control" placeholder="Enter your Valid email" required>
               </div>
-
-
               <div class="form-group">
                 <textarea class="form-control" name="comment" rows="3" placeholder="Comment" required></textarea>
               </div>
@@ -173,7 +183,6 @@ if ($result->num_rows > 0) {
         </div>
 
         <!---Comment Display Section --->
-
         <?php
         $sts = 1;
         $query = mysqli_query($con, "select name,comment,postingDate from  tblcomments where postId='$pid' and status='$sts'");
@@ -185,15 +194,14 @@ if ($result->num_rows > 0) {
               <h5 class="mt-0"><?php echo htmlentities($row['name']); ?> <br />
                 <span style="font-size:11px;"><b>at</b> <?php echo htmlentities($row['postingDate']); ?></span>
               </h5>
-
               <?php echo htmlentities($row['comment']); ?>
             </div>
           </div>
         <?php } ?>
-
       </div>
     </div>
   </div>
+
 
 
   <?php include('includes/footer.php'); ?>

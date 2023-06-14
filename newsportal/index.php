@@ -127,7 +127,27 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 
             <div class="advertisement">
                 <div class="image-fluid" style="background-color: aqua;width: 260px; height: 500px;">
-                    <img src="" alt="image" height="100" width="50">
+                <?php 
+                              $sql = "SELECT * FROM tblads ORDER BY posted_on DESC LIMIT 1";
+                              $result = $con->query($sql);
+                          
+                              if ($result->num_rows > 0) {
+                                  // Fetch the row
+                                  $row = $result->fetch_assoc();
+                                  $nav = $row['nav'];
+                                  $post = $row['posted_on'];
+                                  $id = $row['id'];
+                          
+                                  // Display the image
+                            
+                                   
+                                  
+                                   echo '<img  width="260px" height= "500px" height="100px" src="admin/postimages/' . htmlentities($row["nav"]) . '">';
+                                   
+                                   
+                              }
+                                ?>
+                    
                 </div>
             </div>
 
@@ -318,7 +338,7 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-12">
 
 
 
@@ -384,12 +404,12 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
                     <!-- trending news start -->
                     <div class="mb-3">
                         <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">Trending News</h4>
+                            <h4 class="m-0 text-uppercase font-weight-bold">Popular News</h4>
                         </div>
                         <div class="bg-white border border-top-0 p-3">
                             <div class="list-group">
                                 <?php
-                                $apiUrl = 'http://localhost/news/newsportal/api/trendingnews.php';
+                                $apiUrl = 'http://localhost/news/newsportal/api/popularnews.php';
 
                                 // Fetch data from API
                                 $curl = curl_init();
@@ -499,3 +519,7 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
         object-fit: cover;
     }
 </style>
+
+
+
+
