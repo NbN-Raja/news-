@@ -120,7 +120,7 @@ if (mysqli_query($con, $sql)) {
 
 
                              <?php 
-                              $sql = "SELECT * FROM tblads WHERE home = '' ORDER BY nav;
+                              $sql = "SELECT * FROM tblads WHERE home = '' AND footer='' ORDER BY nav;
                               ";
                               $result = $con->query($sql);
                           

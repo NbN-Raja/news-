@@ -65,8 +65,9 @@
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Advertisement </span> <span class="menu-arrow"></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="add-ads.php">Add Nav</a></li>
+                                    <li><a href="add-ads.php">Add Side </a></li>
                                     <li><a href="add-homeads.php">Add Home Ads</a></li>
+                                    <li><a href="add-multiads.php">Add Nav Ads</a></li>
                                     <li><a href="manage-ads.php">Manage </a></li>
 
                                 </ul>

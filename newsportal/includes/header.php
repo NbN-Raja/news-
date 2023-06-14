@@ -53,7 +53,22 @@
             </a>
         </div>
         <div class="col-lg-8 text-center text-lg-right">
-            <a href="https://htmlcodex.com"><img class="img-fluid" src="img/ads-728x90.png" alt=""></a>
+        <?php 
+        $con = mysqli_connect('localhost','root','','news');
+                              $sql = "SELECT * FROM tblads WHERE home = '' AND nav ='' ORDER BY footer";
+                              $result = $con->query($sql);
+
+    if ($result->num_rows > 0) {
+      // Fetch the row
+      $row = $result->fetch_assoc();
+
+      // Display the image
+      echo '<a href="' . $row['link'] . '" target="_blank">';
+      echo' <img style="height: 100px;" src="./admin/postimages/' . htmlentities($row["footer"]) . '">
+      </a>';
+      echo '<br>';
+    }
+  ?>
         </div>
     </div>
 </div>

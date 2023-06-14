@@ -128,7 +128,7 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
             <div class="advertisement">
                 <div class="image-fluid" style="background-color: aqua;width: 260px; height: 500px;">
                 <?php 
-$sql = "SELECT * FROM tblads WHERE home = '' ORDER BY nav;
+$sql = "SELECT * FROM tblads WHERE home = '' AND footer ='' ORDER BY nav;
 ";                              $result = $con->query($sql);
                           
                               if ($result->num_rows > 0) {
@@ -222,7 +222,7 @@ $sql = "SELECT * FROM tblads WHERE home = '' ORDER BY nav;
 
     <div style="width: 100%; display: flex; justify-content: center; padding-bottom:10px">
   <?php 
-    $sql = "SELECT * FROM tblads WHERE nav = '' ORDER BY home;";
+    $sql = "SELECT * FROM tblads WHERE nav = '' AND footer='' ORDER BY home;";
     $result = $con->query($sql);
 
     if ($result->num_rows > 0) {
