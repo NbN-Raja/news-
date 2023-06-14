@@ -7,7 +7,7 @@ if (strlen($_SESSION['login']) == 0) {
 } else {
 
 if (isset($_POST['submit_nav'])) {
-    $nav = $_FILES['nav'];
+    $nav = $_FILES['home'];
     $link= $_POST['link'];
 
     // File Upload
@@ -19,7 +19,7 @@ if (isset($_POST['submit_nav'])) {
         // Move the uploaded file to the desired location
         if (move_uploaded_file($image_tmp, $image_path)) {
             // File upload successful, insert a new record in the database
-            $query = mysqli_query($con, "INSERT INTO tblads (nav,link) VALUES ('$image_name','$link')");
+            $query = mysqli_query($con, "INSERT INTO tblads (home,link) VALUES ('$image_name','$link')");
 
             if ($query) {
                 $msg = "News Updated";
@@ -37,10 +37,10 @@ if (isset($_POST['submit_nav'])) {
 
 // Update here 
 if (isset($_POST['update'])) {
-    $navs = $_FILES['nav']['name'];  // Extract the file name from the $_FILES array
+    $navs = $_FILES['home']['name'];  // Extract the file name from the $_FILES array
     $id = $_POST['id'];
     $link = $_POST['link'];
-$sql = "UPDATE tblads SET nav = '$navs', link= '$link' where id='$id'";
+$sql = "UPDATE tblads SET home = '$navs' , link= '$link' where id='$id'";
 
 // Execute the SQL statement
 if (mysqli_query($con, $sql)) {
@@ -112,7 +112,7 @@ if (mysqli_query($con, $sql)) {
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box">
-                                    <h4 class="m-t-0 header-title"><b>Add Navigation Ads</b></h4>
+                                    <h4 class="m-t-0 header-title"><b>Add Home Ads</b></h4>
                                     <hr />
                                    
                                     <div class="row">
@@ -120,14 +120,14 @@ if (mysqli_query($con, $sql)) {
 
 
                              <?php 
-                              $sql = "SELECT * FROM tblads WHERE home = '' ORDER BY nav;
+                              $sql = "SELECT * FROM tblads WHERE nav = '' ORDER BY home;
                               ";
                               $result = $con->query($sql);
                           
                               if ($result->num_rows > 0) {
                                   // Fetch the row
                                   $row = $result->fetch_assoc();
-                                  $nav = $row['nav'];
+                                  $home = $row['home'];
                                   $post = $row['posted_on'];
                                   $id = $row['id'];
                                   $link = $row['link'];
@@ -136,7 +136,7 @@ if (mysqli_query($con, $sql)) {
                             
                                    echo '<p>  Live Advertisement on home page   </p>';
                                    echo '<p> ' . $id .  '</p>';
-                                   echo '<img height="100px" src="postimages/' . htmlentities($row["nav"]) . '">';
+                                   echo '<img height="100px" src="postimages/' . htmlentities($row["home"]) . '">';
                                    echo '<br>';
                                    echo '<p>Uploaded on ' . $post . '</p>';
                               
@@ -169,11 +169,10 @@ if (mysqli_query($con, $sql)) {
                                                 <div class="form-group">
                                                     <label class="col-md-2 control-label">Upload Image</label>
                                                     <div class="col-md-10">
-                                                        <input type="file" class="form-control" name="nav" required>
+                                                        <input type="file" class="form-control" name="home" >
                                                     </div>
                                                     <div class="col-md-10">
-                                                    <input type="text" class="form-control" name="link" value="<?php echo $link ?>"  required>
-
+                                                        <input type="text" class="form-control" name="link" value="<?php echo $link ?>"  required>
                                                     </div>
                                                 </div>
 
@@ -201,37 +200,37 @@ if (mysqli_query($con, $sql)) {
 
                         <?php 
                     } else {
-                                  echo "No image found.";
+                        echo "No image found.";
 
-                                  ?>
-                                 <form class="form-horizontal" name="category" method="post" enctype="multipart/form-data">
-                                                <div class="form-group">
-                                                    <label class="col-md-2 control-label">Upload Image</label>
-                                                    <div class="col-md-10">
-                                                        <input type="file" class="form-control" name="nav" required>
-                                                    </div>
-                                                    <div class="col-md-10">
-                                                        <input type="text" class="form-control" name="link" placeholder="Enter you ad link" required>
-                                                    </div>
-                                                </div>
+                        ?>
+                       <form class="form-horizontal" name="category" method="post" enctype="multipart/form-data">
+                                      <div class="form-group">
+                                          <label class="col-md-2 control-label">Upload Image</label>
+                                          <div class="col-md-10">
+                                              <input type="file" class="form-control" name="nav" required>
+                                          </div>
+                                          <div class="col-md-10">
+                                              <input type="text" class="form-control" name="link" placeholder="Enter you ad link" required>
+                                          </div>
+                                      </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-md-2 control-label">&nbsp;</label>
-                                                    <div class="col-md-10">
-                                                     
+                                      <div class="form-group">
+                                          <label class="col-md-2 control-label">&nbsp;</label>
+                                          <div class="col-md-10">
+                                           
 
-                                                        <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit_nav">
-                                                            Submit
-                                                        </button>
-                                                       
-                                                    </div>
-                                                </div>
-                                            </form>
+                                              <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit_nav">
+                                                  Submit
+                                              </button>
+                                             
+                                          </div>
+                                      </div>
+                                  </form>
 
 
 <?php 
-                              }
-                          ?>
+                    }
+                ?>
 
 
 

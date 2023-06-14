@@ -128,8 +128,8 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
             <div class="advertisement">
                 <div class="image-fluid" style="background-color: aqua;width: 260px; height: 500px;">
                 <?php 
-                              $sql = "SELECT * FROM tblads ORDER BY posted_on DESC LIMIT 1";
-                              $result = $con->query($sql);
+$sql = "SELECT * FROM tblads WHERE home = '' ORDER BY nav;
+";                              $result = $con->query($sql);
                           
                               if ($result->num_rows > 0) {
                                   // Fetch the row
@@ -137,12 +137,15 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
                                   $nav = $row['nav'];
                                   $post = $row['posted_on'];
                                   $id = $row['id'];
+                                  $link= $row['link'];
                           
                                   // Display the image
                             
                                    
                                   
-                                   echo '<img  width="260px" height= "500px" height="100px" src="admin/postimages/' . htmlentities($row["nav"]) . '">';
+                                  echo '<a href="' . $link . '" target="_blank">';
+                                  echo '<img  width="260px" height= "500px" height="100px" src="admin/postimages/' . htmlentities($row["nav"]) . '">
+                                   </a>';
                                    
                                    
                               }
@@ -211,6 +214,30 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
             </div>
         </div>
     </div>
+
+
+
+
+    <!-- Second Advertiusement  -->
+
+    <div style="width: 100%; display: flex; justify-content: center; padding-bottom:10px">
+  <?php 
+    $sql = "SELECT * FROM tblads WHERE nav = '' ORDER BY home;";
+    $result = $con->query($sql);
+
+    if ($result->num_rows > 0) {
+      // Fetch the row
+      $row = $result->fetch_assoc();
+
+      // Display the image
+      echo '<a href="' . $row['link'] . '" target="_blank">';
+      echo' <img style="height: 100px;" src="./admin/postimages/' . htmlentities($row["home"]) . '">
+      </a>';
+      echo '<br>';
+    }
+  ?>
+</div>
+
 
 
     <div class="container-fluid">
