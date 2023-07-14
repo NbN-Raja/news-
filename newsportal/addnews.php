@@ -70,24 +70,36 @@ if (isset($_POST['insert'])) {
 
 
     <div class="container">
-    <div class="add">
-        <form name="aboutus" method="post">
-            <div class="form-group m-b-20">
-                <h5>Add News</h5>
-                <h5 class="m-b-30 m-t-0 header-title"><b>Title</b></h5>
-                <input type="text" class="form-control" id="pagetitle" name="pagetitle" required>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card-box">
-                        <h5 class="m-b-30 m-t-0 header-title"><b>Provide News Here</b></h5>
-                        <textarea rows="10" cols="90" class="summernote" name="pagedescription" required></textarea>
-                    </div>
+
+    <?php
+if (!isset($_SESSION['name'])) {
+    echo '<h5> Please login to add news </h5>';
+} else {
+?>
+<div class="add">
+    <form name="aboutus" method="post">
+        <div class="form-group m-b-20">
+            <h5>Add News</h5>
+            <h5 class="m-b-30 m-t-0 header-title"><b>Title</b></h5>
+            <input type="text" class="form-control" id="pagetitle" name="pagetitle" required>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <h5 class="m-b-30 m-t-0 header-title"><b>Provide News Here</b></h5>
+                    <textarea rows="10" cols="90" class="summernote" name="pagedescription" required></textarea>
                 </div>
             </div>
-            <button type="submit" name="insert" class="btn btn-success waves-effect waves-light">Add</button>
-        </form>
-    </div>
+        </div>
+        <button type="submit" name="insert" class="btn btn-success waves-effect waves-light">Add</button>
+    </form>
+</div>
+<?php
+}
+?>
+
+
+  
     <div class="side">
         <!-- Search Widget -->
         <div class="card mb-4">
