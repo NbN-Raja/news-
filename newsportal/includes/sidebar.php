@@ -61,29 +61,29 @@
 
   <!-- Side Widget -->
   <div class="card my-4">
-  <h5 class="card-header">Popular News</h5>
-  <div class="card-body">
-    <?php
-    $query1 = mysqli_query($con, "select tblposts.id as pid,tblposts.PostImage as postImage ,tblposts.PostDetails as postdetail,tblposts.PostTitle as posttitle from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId  order by viewCounter desc limit 4");
-    while ($result = mysqli_fetch_array($query1)) {
-    ?>
-      <a href="news-details.php?nid=<?php echo htmlentities($result['pid']) ?>">
-        <div class="main" style="display:flex; justify-content: space-around;">
-         <div class="">
-         <img class="object-cover" style="width: 4pc; height: 4pc; object-fit: cover;     border-radius: 10px;" src="./admin/postimages/<?php echo htmlentities($result['postImage']); ?>">
-         </div>
-         <div class="h6 m-0 text-uppercase font-weight-semi-bold">
-  <a><?php $title = htmlentities($result['posttitle']);
-    echo substr($title, 0, 25) . "..." ?></a>
-</div>
+    <h5 class="card-header">Popular News</h5>
+    <div class="card-body">
+      <?php
+      $query1 = mysqli_query($con, "select tblposts.id as pid,tblposts.PostImage as postImage ,tblposts.PostDetails as postdetail,tblposts.PostTitle as posttitle from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId  order by viewCounter desc limit 4");
+      while ($result = mysqli_fetch_array($query1)) {
+      ?>
+        <a href="news-details.php?nid=<?php echo htmlentities($result['pid']) ?>">
+          <div class="main" style="display:flex; justify-content: space-around;">
+            <div class="">
+              <img class="object-cover" style="width: 4pc; height: 4pc; object-fit: cover;     border-radius: 10px;" src="./admin/postimages/<?php echo htmlentities($result['postImage']); ?>">
+            </div>
+            <div class="h6 m-0 text-uppercase font-weight-semi-bold">
+              <a><?php $title = htmlentities($result['posttitle']);
+                  echo substr($title, 0, 25) . "..." ?></a>
+            </div>
 
-        </div>
-      </a>
-      <br>
-    <?php } ?>
-    </ul>
+          </div>
+        </a>
+        <br>
+      <?php } ?>
+      </ul>
+    </div>
   </div>
-</div>
 
 
   </div>

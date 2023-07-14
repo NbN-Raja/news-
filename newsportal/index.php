@@ -127,30 +127,29 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 
             <div class="advertisement">
                 <div class="image-fluid" style="background-color: aqua;width: 260px; height: 500px;">
-                <?php 
-$sql = "SELECT * FROM tblads WHERE home = '' AND footer ='' ORDER BY nav;
-";                              $result = $con->query($sql);
-                          
-                              if ($result->num_rows > 0) {
-                                  // Fetch the row
-                                  $row = $result->fetch_assoc();
-                                  $nav = $row['nav'];
-                                  $post = $row['posted_on'];
-                                  $id = $row['id'];
-                                  $link= $row['link'];
-                          
-                                  // Display the image
-                            
-                                   
-                                  
-                                  echo '<a href="' . $link . '" target="_blank">';
-                                  echo '<img  width="260px" height= "500px" height="100px" src="admin/postimages/' . htmlentities($row["nav"]) . '">
+                    <?php
+                    $sql = "SELECT * FROM tblads WHERE home = '' AND footer ='' ORDER BY nav;
+";
+                    $result = $con->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        // Fetch the row
+                        $row = $result->fetch_assoc();
+                        $nav = $row['nav'];
+                        $post = $row['posted_on'];
+                        $id = $row['id'];
+                        $link = $row['link'];
+
+                        // Display the image
+
+
+
+                        echo '<a href="' . $link . '" target="_blank">';
+                        echo '<img  width="260px" height= "500px" height="100px" src="admin/postimages/' . htmlentities($row["nav"]) . '">
                                    </a>';
-                                   
-                                   
-                              }
-                                ?>
-                    
+                    }
+                    ?>
+
                 </div>
             </div>
 
@@ -221,22 +220,22 @@ $sql = "SELECT * FROM tblads WHERE home = '' AND footer ='' ORDER BY nav;
     <!-- Second Advertiusement  -->
 
     <div style="width: 100%; display: flex; justify-content: center; padding-bottom:10px">
-  <?php 
-    $sql = "SELECT * FROM tblads WHERE nav = '' AND footer='' ORDER BY home;";
-    $result = $con->query($sql);
+        <?php
+        $sql = "SELECT * FROM tblads WHERE nav = '' AND footer='' ORDER BY home;";
+        $result = $con->query($sql);
 
-    if ($result->num_rows > 0) {
-      // Fetch the row
-      $row = $result->fetch_assoc();
+        if ($result->num_rows > 0) {
+            // Fetch the row
+            $row = $result->fetch_assoc();
 
-      // Display the image
-      echo '<a href="' . $row['link'] . '" target="_blank">';
-      echo' <img style="height: 100px;" src="./admin/postimages/' . htmlentities($row["home"]) . '">
+            // Display the image
+            echo '<a href="' . $row['link'] . '" target="_blank">';
+            echo ' <img style="height: 100px;" src="./admin/postimages/' . htmlentities($row["home"]) . '">
       </a>';
-      echo '<br>';
-    }
-  ?>
-</div>
+            echo '<br>';
+        }
+        ?>
+    </div>
 
 
 
@@ -249,7 +248,7 @@ $sql = "SELECT * FROM tblads WHERE home = '' AND footer ='' ORDER BY nav;
                             <h4 class="m-0 text-uppercase font-weight-bold">Trending News</h4>
                         </div>
                         <div class="bg-white border border-top-0 p-3">
-                       <div class="list-group p-2 ">';
+                            <div class="list-group p-2 ">';
                                 <?php
                                 $apiUrl = 'http://localhost/news/newsportal/api/trendingnews.php';
 
@@ -334,7 +333,7 @@ $sql = "SELECT * FROM tblads WHERE home = '' AND footer ='' ORDER BY nav;
                                                 <a id="category" class="badge badge-info text-uppercase font-weight-semi-bold p-2 mr-2" href="">' . $post['catname'] . '</a>
                                                 <a class="text-body"><small>' . $post['postdate'] . '</small></a>
                                                 <h2 class="blog-title">' . $post['posttitle'] . '</h2>';
-                        
+
                                 $words = explode(' ', $post['postdetail']);
                                 $limitedWords = array_slice($words, 0, 30);
                                 $limitedText = implode(' ', $limitedWords);
@@ -409,20 +408,23 @@ $sql = "SELECT * FROM tblads WHERE home = '' AND footer ='' ORDER BY nav;
                             <h4 class="m-0 text-uppercase font-weight-bold">Tags</h4>
                         </div>
                         <div class="bg-white border border-top-0 p-3">
-                            <div class="d-flex flex-wrap m-n1">
-                                <?php $query = mysqli_query($con, "select id,CategoryName from tblcategory");
-                                while ($row = mysqli_fetch_array($query)) {
-                                ?>
+  <div class="d-flex flex-wrap m-n1">
+    <?php
+    $query = mysqli_query($con, "select id,CategoryName from tblcategory");
+    $count = 0; // Initialize a counter variable
 
+    while ($row = mysqli_fetch_array($query)) {
+      $count++; // Increment the counter
 
-                                    <a class="btn btn-sm btn-outline-secondary m-1" href="category.php?catid=<?php echo htmlentities($row['id']) ?>"><?php echo htmlentities($row['CategoryName']); ?></a>
+      if ($count > 4) { // Display in two columns after the fourth response
+        echo '</div><div class="d-flex flex-wrap m-n1">';
+      }
+    ?>
+      <a class="btn btn-sm btn-outline-secondary m-1" href="category.php?catid=<?php echo htmlentities($row['id']) ?>"><?php echo htmlentities($row['CategoryName']); ?></a>
+    <?php } ?>
+  </div>
+</div>
 
-
-
-                                <?php } ?>
-
-                            </div>
-                        </div>
                     </div>
                     <!-- Tags End -->
 
@@ -546,7 +548,3 @@ $sql = "SELECT * FROM tblads WHERE home = '' AND footer ='' ORDER BY nav;
         object-fit: cover;
     }
 </style>
-
-
-
-

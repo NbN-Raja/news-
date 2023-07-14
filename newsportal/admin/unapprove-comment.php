@@ -147,6 +147,7 @@ while($row=mysqli_fetch_array($query))
 <th scope="row"><?php echo htmlentities($cnt);?></th>
 <td><?php echo htmlentities($row['name']);?></td>
 <td><?php echo htmlentities($row['email']);?></td>
+
 <td><?php echo htmlentities($row['comment']);?></td>
 <td><?php $st=$row['status'];
 if($st=='0'):

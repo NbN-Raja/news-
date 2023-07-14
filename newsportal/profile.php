@@ -13,7 +13,7 @@ include('includes/config.php');
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>News Portal | About us</title>
+  <title>News Portal | Contact us</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -48,19 +48,12 @@ include('includes/config.php');
 
 <body style="padding:0">
 
-
   <!-- Navigation -->
   <?php include('includes/header.php'); ?>
   <!-- Page Content -->
   <div class="container">
 
-    <?php
-    $pagetype = 'aboutus';
-    $query = mysqli_query($con, "select PageTitle,Description from tblpages where PageName='$pagetype'");
-    while ($row = mysqli_fetch_array($query)) {
-
-    ?>
-      <h1 class="mt-4 mb-3"><?php echo htmlentities($row['PageTitle']) ?>
+    
 
       </h1>
 
@@ -68,19 +61,77 @@ include('includes/config.php');
         <li class="breadcrumb-item">
           <a href="index.php">Home</a>
         </li>
-        <li class="breadcrumb-item active">About</li>
+        <li class="breadcrumb-item active">Profile</li>
       </ol>
 
       <!-- Intro Content -->
       <div class="row">
 
         <div class="col-lg-12">
+            <!-- Add Here  -->
+            <div class="">
+                <h1>Your Profile Sections</h1>
+                <div class="container">
+  <div class="row">
+  <div class="col-md-4">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Profile</h5>
+      <?php
+      $sessionId = $_SESSION['id'];
+      $query = mysqli_query($con, "SELECT name, email FROM tblusers WHERE id = '$sessionId'");
+      if ($row = mysqli_fetch_assoc($query)) {
+          $name = $row['name'];
+          $email = $row['email'];
+          echo '<p class="card-text">User\'s Name: ' . $name . '</p>';
+          echo '<p class="card-text">Email: ' . $email . '</p>';
+      }
+      ?>
+      <a href="#" class="btn btn-primary">Edit Profile</a>
+    </div>
+  </div>
+</div>
 
-          <p><?php echo $row['Description']; ?></p>
+
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">News Posts</h5>
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">News Title 1</h6>
+                <small>Posted on: July 1, 2023</small>
+              </div>
+              <p class="mb-1">News content goes here...</p>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">News Title 2</h6>
+                <small>Posted on: July 2, 2023</small>
+              </div>
+              <p class="mb-1">News content goes here...</p>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">News Title 3</h6>
+                <small>Posted on: July 3, 2023</small>
+              </div>
+              <p class="mb-1">News content goes here...</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+            </div>
+
         </div>
       </div>
       <!-- /.row -->
-    <?php } ?>
+   
 
   </div>
   <!-- /.container -->

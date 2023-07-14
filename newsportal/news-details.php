@@ -7,25 +7,26 @@ if (empty($_SESSION['token'])) {
 }
 
 if (isset($_POST['submit'])) {
-  //Verifying CSRF Token
+  // Verifying CSRF Token
   if (!empty($_POST['csrftoken'])) {
     if (hash_equals($_SESSION['token'], $_POST['csrftoken'])) {
       $name = $_POST['name'];
       $email = $_POST['email'];
       $comment = $_POST['comment'];
+      $rating = $_POST['rating']; // Added line to retrieve the rating value
       $postid = intval($_GET['nid']);
       $st1 = '0';
-      $query = mysqli_query($con, "insert into tblcomments(postId,name,email,comment,status) values('$postid','$name','$email','$comment','$st1')");
-      if ($query) :
-        echo "<script>alert('comment successfully submit. Comment will be display after admin review ');</script>";
+      $query = mysqli_query($con, "INSERT INTO tblcomments (postId, name, email, comment, rating, status) VALUES ('$postid', '$name', '$email', '$comment', '$rating', '$st1')");
+      if ($query) {
+        echo "<script>alert('Comment successfully submitted. Comment will be displayed after admin review.');</script>";
         unset($_SESSION['token']);
-      else :
+      } else {
         echo "<script>alert('Something went wrong. Please try again.');</script>";
-
-      endif;
+      }
     }
   }
 }
+
 $postid = intval($_GET['nid']);
 
 $sql = "SELECT viewCounter FROM tblposts WHERE id = '$postid'";
@@ -159,44 +160,84 @@ if ($result->num_rows > 0) {
 
     </div>
     <!-- /.row -->
+   
+
+
 
     <!---Comment Section --->
     <div class="row">
-      <div class="col-md-8">
-        <div class="card my-4">
-          <h5 class="card-header">Leave a Comment:</h5>
-          <div class="card-body shadow">
-            <form name="Comment" method="post">
-              <input type="hidden" name="csrftoken" value="<?php echo htmlentities($_SESSION['token']); ?>" />
-              <div class="form-group">
-                <input type="text" name="name" class="form-control" placeholder="Enter your fullname" required>
-              </div>
-              <div class="form-group">
-                <input type="email" name="email" class="form-control" placeholder="Enter your Valid email" required>
-              </div>
-              <div class="form-group">
-                <textarea class="form-control" name="comment" rows="3" placeholder="Comment" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-info" name="submit">Submit</button>
-            </form>
-          </div>
+      <div class="col-md-8 shadow">
+      <div class="card my-4">
+  <h5 class="card-header">Leave a Comment:</h5>
+  <div class="card-body shadow">
+    <form name="Comment" method="post">
+      <input type="hidden" name="csrftoken" value="<?php echo htmlentities($_SESSION['token']); ?>">
+      <?php if (isset($_SESSION['name'])) : ?>
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" placeholder="Enter your full name" value="<?php echo $_SESSION['name']; ?>" required readonly>
         </div>
+      <?php else : ?>
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
+        </div>
+      <?php endif; ?>
+      <?php if (isset($_SESSION['email'])) : ?>
+        <div class="form-group">
+          <input type="email" name="email" class="form-control" placeholder="Enter your valid email" value="<?php echo $_SESSION['email']; ?>" required>
+        </div>
+      <?php else : ?>
+        <div class="form-group">
+          <input type="email" name="email" class="form-control" placeholder="Enter your valid email" value="" required>
+        </div>
+      <?php endif; ?>
+      <div class="form-group">
+        <label for="rating">Rating:</label>
+        <div class="rating-stars">
+  <?php for ($i = 1; $i <= 5; $i++) : ?>
+    <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required>
+    <label for="star<?php echo $i; ?>">&#9733;</label>
+  <?php endfor; ?>
+</div>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" name="comment" rows="3" placeholder="Comment" required></textarea>
+      </div>
+      
+      <button type="submit" class="btn btn-info" name="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+
 
         <!---Comment Display Section --->
         <?php
         $sts = 1;
-        $query = mysqli_query($con, "select name,comment,postingDate from  tblcomments where postId='$pid' and status='$sts'");
+        $query = mysqli_query($con, "select name,rating,comment,postingDate from  tblcomments where postId='$pid' and status='$sts'");
         while ($row = mysqli_fetch_array($query)) {
         ?>
-          <div class="media mb-4">
-            <img class="d-flex mr-3 rounded-circle" src="images/usericon.png" alt="">
-            <div class="media-body">
-              <h5 class="mt-0"><?php echo htmlentities($row['name']); ?> <br />
-                <span style="font-size:11px;"><b>at</b> <?php echo htmlentities($row['postingDate']); ?></span>
-              </h5>
-              <?php echo htmlentities($row['comment']); ?>
-            </div>
-          </div>
+         <div class="media mb-4">
+  <img class="d-flex mr-3 rounded-circle" src="images/usericon.png" alt="">
+  <div class="media-body">
+    <h5 class="mt-0">
+      <?php
+        echo htmlentities($row['name']);
+        $rating = intval($row['rating']); // Convert rating to an integer
+        echo '<br>';
+        for ($i = 1; $i <= 5; $i++) {
+          if ($i <= $rating) {
+            echo '<span style="font-weight: bold;">&#9733;</span>'; // Display a filled star
+          } else {
+            echo '&#9734;'; // Display an empty star
+          }
+        }
+      ?>
+      <span style="font-size:11px;"><b>at</b> <?php echo htmlentities($row['postingDate']); ?></span>
+    </h5>
+    <a> <?php echo htmlentities($row['comment']); ?> </a>
+  </div>
+</div>
+
         <?php } ?>
       </div>
     </div>
@@ -214,3 +255,21 @@ if ($result->num_rows > 0) {
 </body>
 
 </html>
+
+
+
+
+<style>
+.rating-container {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  color: gold;
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+
+</style>

@@ -1,3 +1,6 @@
+<!-- Include jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <div class="container-fluid d-none d-lg-block">
     <div class="row align-items-center bg-dark px-lg-5">
@@ -99,6 +102,32 @@
                         </div>
                     </div> -->
                 <a href="contact-us.php" class="nav-item nav-link">Contact</a>
+                <a href="addnews.php" class="nav-item nav-link">Add News</a>
+                <?php 
+if(isset($_SESSION['name'])){
+    $name = $_SESSION['name'];
+    echo '<div class="dropdown">';
+    echo '<button class="btn btn-secondary dropdown-toggle d-flex justify-content-center align-items-center  bg-info" style="
+    position: relative;
+    top: 10px;
+" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+    echo $name;
+    echo '</button>';
+    echo '<div class="dropdown-menu" aria-labelledby="profileDropdown">';
+    echo '<a class="dropdown-item" href="profile.php">Profile</a>';
+    echo '<a class="dropdown-item" href="logout.php">Logout</a>';
+    echo '</div>';
+    echo '</div>';
+} else {
+    echo '<a href="login.php" class="nav-item nav-link">Login</a>';
+}
+?>
+
+
+
+
+
+
             </div>
 
                 <div class="input-group ml-auto d-none d-lg-flex" style="width: 100%; max-width: 300px;">

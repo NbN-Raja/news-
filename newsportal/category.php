@@ -95,7 +95,7 @@ while ($row=mysqli_fetch_array($query)) {
 
 ?>
 <h1><?php echo htmlentities($row['category']);?> News</h1>
-          <div class="card mb-4">
+          <div class="card shadow mb-4">
        <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['PostImage']);?>" alt="<?php echo htmlentities($row['posttitle']);?>">
             <div class="card-body">
               <h2 class="card-title text-info"><?php echo htmlentities($row['posttitle']);?></h2>
@@ -156,7 +156,6 @@ while ($row=mysqli_fetch_array($query)) {
 <style>
 
 .card-img-top{
-  box-shadow: 10px 10px 5px 12px lightblue;
 
 }
 </style>

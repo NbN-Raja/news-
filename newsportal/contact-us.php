@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('includes/config.php');
 
 ?>
@@ -25,7 +26,23 @@ include('includes/config.php');
 
   <!-- Google Translater -->
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <link href="../new/img/favicon.ico" rel="icon">
 
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="css/modern-business.css" rel="stylesheet">
+<link href="../new/css/style.css" rel="stylesheet">
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+
+<!-- Libraries Stylesheet -->
+<link href="../new/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
 </head>
 
