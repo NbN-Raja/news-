@@ -59,7 +59,7 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
                         </a>
                         <a href="news-details.php?nid=<?php echo htmlentities($result['pid']) ?>">
                             <div class="position-relative overflow-hidden" style="height: 500px;">
-                                <img class="img-fluid h-100" src="./admin/postimages/<?php echo htmlentities($result['postImage']); ?>" style="object-fit: cover;">
+                                <img class="img-fluid h-100" src="./admin/postimages/<?php echo htmlentities($result['postImage']); ?>" style="width: -webkit-fill-available;">
                                 <div class="overlay">
                                     <div class="mb-2">
                                         <a class="badge badge-info text-uppercase font-weight-semi-bold p-2 mr-2" href=""><?php echo htmlentities($result['catname']) ?> </a>
@@ -240,14 +240,14 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 
 
     <div class="container-fluid">
-        <div class="container">
+        <div class="containerr">
             <div class="row">
                 <div class="col-lg-8 ">
                     <div class="mb-3">
-                        <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">Trending News</h4>
+                        <div class=" mb-0">
+                            <h4 class="m-0 text-uppercase ">Trending News</h4>
                         </div>
-                        <div class="bg-white border border-top-0 p-3">
+                        <div class=" border-top-0 p-3">
                             <div class="list-group p-2 ">';
                                 <?php
                                 $apiUrl = 'http://localhost/news/newsportal/api/trendingnews.php';
@@ -263,12 +263,9 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
                                 if ($data) {
                                     foreach ($data as $post) {
                                         echo '<div class="p-1 pb-4 ">';
-                                        echo '<div class="media shadow">';
+                                        echo '<div class="media shadow p-10">';
 
-                                        // Image on the left
-                                        echo '<div class="image-container">';
-                                        echo '<img class="" src="./admin/postimages/' . htmlentities($post["postImage"]) . '" alt="Post Image">';
-                                        echo '</div>';
+
 
 
                                         // Text and category on the right
@@ -284,7 +281,10 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
                                         echo '<a>' . $post['postdate'] .   '</a> <br>';
                                         echo '<h5 class="badge badge-info text-uppercase font-weight-semi-bold p-2 mr-2"> Read More</h5>';
                                         echo '</div>';
-
+                                        // Image on the left
+                                        echo '<div class="image-container">';
+                                        echo '<img class="" src="./admin/postimages/' . htmlentities($post["postImage"]) . '" alt="Post Image">';
+                                        echo '</div>';
                                         echo '</div>';
                                         echo '</div>';
                                     }
@@ -300,69 +300,12 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="section-title" style="   ">
-                                <h4 class="m-0 text-uppercase font-weight-bold">Latest News</h4>
-                            </div>
-                        </div>
 
-                        <!-- included file here -->
-                        <!-- ************************************************ Latest News Start ***************************************************** -->
-
-                        <?php
-                        $apiUrl = 'http://localhost/news/newsportal/api/latestnews.php';
-
-                        // Fetch data from API
-                        $curl = curl_init();
-                        curl_setopt($curl, CURLOPT_URL, $apiUrl);
-                        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-                        $response = curl_exec($curl);
-                        $data = json_decode($response, true);
-                        curl_close($curl);
-
-                        // Display data
-                        if ($data) {
-                            foreach ($data as $post) {
-                                echo '<a href="news-details.php?nid=' . $post['pid'] . '">
-                                        <div class="card">
-                                            <div class="card-img"> 
-                                                <img src="./admin/postimages/' . htmlentities($post["postImage"]) . '">
-                                            </div>
-                                            <div class="card-info">
-                                                <a id="category" class="badge badge-info text-uppercase font-weight-semi-bold p-2 mr-2" href="">' . $post['catname'] . '</a>
-                                                <a class="text-body"><small>' . $post['postdate'] . '</small></a>
-                                                <h2 class="blog-title">' . $post['posttitle'] . '</h2>';
-
-                                $words = explode(' ', $post['postdetail']);
-                                $limitedWords = array_slice($words, 0, 30);
-                                $limitedText = implode(' ', $limitedWords);
-                                echo '<p>' . $limitedText . ' ... </p>
-                                      <hr>
-                                      <small class="ml-3"><i class="far fa-eye mr-2"></i>' . $post['view'] . '</small>
-                                      <small class="ml-3"><i class="far fa-comment mr-2"></i>123</small>
-                                    </div>
-                                </div>
-                            </a>';
-                            }
-                        } else {
-                            echo 'No data found';
-                        }
-                        ?>
+                   
+                  
 
 
 
-
-
-
-
-
-                        <!-- ************************************************ Latest News end ***************************************************** -->
-
-
-
-
-                    </div>
                 </div>
                 <div class="col-lg-12">
 
@@ -371,12 +314,20 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 
                     <!-- Ads Start -->
                     <div class="mb-3">
-                        <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">Advertisement</h4>
-                        </div>
-                        <div class="bg-white text-center border border-top-0 p-3">
-                            <a href=""><img class="img-fluid" src="img/news-800x500-2.jpg" alt=""></a>
-                        </div>
+
+
+                        <!-- Start of upcoming event widget -->
+                        <!-- <script type="text/javascript">
+var nc_ev_width = 250;
+var nc_ev_height = 303;
+var nc_ev_def_lan = 'np';
+var nc_ev_api_id = 49320230817201; //-->
+                        <!-- </script>
+<script type="text/javascript" src="https://www.ashesh.com.np/calendar-event/ev.js"></script><div id="ncwidgetlink">Powered by © <a href="https://www.ashesh.com.np/nepali-calendar/" id="nclink" title="Nepali calendar" target="_blank">Nepali Calendar</a></div> -->
+                        <br>
+
+                        <!-- End of upcoming event widget -->
+
                     </div>
                     <!-- Ads End -->
 
@@ -404,26 +355,26 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 
                     <!-- Tags Start -->
                     <div class="mb-3">
-                        <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">Tags</h4>
+                        <div class=" mb-0">
+                            <h4 class="m-0 text-uppercase ">Tags</h4>
                         </div>
                         <div class="bg-white border border-top-0 p-3">
-  <div class="d-flex flex-wrap m-n1">
-    <?php
-    $query = mysqli_query($con, "select id,CategoryName from tblcategory");
-    $count = 0; // Initialize a counter variable
+                            <div class="d-flex flex-wrap m-n1">
+                                <?php
+                                $query = mysqli_query($con, "select id,CategoryName from tblcategory");
+                                $count = 0; // Initialize a counter variable
 
-    while ($row = mysqli_fetch_array($query)) {
-      $count++; // Increment the counter
+                                while ($row = mysqli_fetch_array($query)) {
+                                    $count++; // Increment the counter
 
-      if ($count > 4) { // Display in two columns after the fourth response
-        echo '</div><div class="d-flex flex-wrap m-n1">';
-      }
-    ?>
-      <a class="btn btn-sm btn-outline-secondary m-1" href="category.php?catid=<?php echo htmlentities($row['id']) ?>"><?php echo htmlentities($row['CategoryName']); ?></a>
-    <?php } ?>
-  </div>
-</div>
+                                    if ($count > 4) { // Display in two columns after the fourth response
+                                        echo '</div><div class="d-flex flex-wrap m-n1">';
+                                    }
+                                ?>
+                                    <a class="btn btn-sm btn-outline-secondary m-1" href="category.php?catid=<?php echo htmlentities($row['id']) ?>"><?php echo htmlentities($row['CategoryName']); ?></a>
+                                <?php } ?>
+                            </div>
+                        </div>
 
                     </div>
                     <!-- Tags End -->
@@ -432,8 +383,8 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 
                     <!-- trending news start -->
                     <div class="mb-3">
-                        <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">Popular News</h4>
+                        <div class=" mb-0">
+                            <h4 class="m-0 text-uppercase ">Popular News</h4>
                         </div>
                         <div class="bg-white border border-top-0 p-3">
                             <div class="list-group">
@@ -470,13 +421,30 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 
 
                         </div>
+
                     </div>
+                    <div class="">
+
+                        <!-- Start of nepali calendar widget -->
+                        <script type="text/javascript">
+                            var nc_width = 'responsive';
+                            var nc_height = 500;
+                            var nc_api_id = "791081n539"; //-->
+                        </script>
+                        <script type="text/javascript" src="https://www.ashesh.com.np/nepali-calendar/js/ncf.js?v=5"></script>
+                        <div id="ncwidgetlink"></div>
+                        <!-- End of nepali calendar widget -->
+
+                    </div>
+
                 </div>
 
             </div>
         </div>
     </div>
 
+
+ 
 
     <!-- footer  -->
     <?php include('includes/footer.php')  ?>
@@ -488,6 +456,10 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 </html>
 
 <style>
+
+    a{
+        color: black;
+    }
     .card {
         width: 365px;
         border: 1px solid #ccc;

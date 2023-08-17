@@ -67,7 +67,7 @@
 
       // Display the image
       echo '<a href="' . $row['link'] . '" target="_blank">';
-      echo' <img style="height: 100px;" src="./admin/postimages/' . htmlentities($row["footer"]) . '">
+      echo' <img style="height: 100px; width: -webkit-fill-available;" src="./admin/postimages/' . htmlentities($row["footer"]) . '">
       </a>';
       echo '<br>';
     }

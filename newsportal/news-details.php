@@ -90,7 +90,7 @@ if ($result->num_rows > 0) {
         $query = mysqli_query($con, "select tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url,tblposts.postedBy,tblposts.lastUpdatedBy,tblposts.UpdationDate from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.id='$pid'");
         while ($row = mysqli_fetch_array($query)) {
         ?>
-          <div class="container shadow p-4 text-dark">
+          <div class="container shadow p-4 text-dark " style="width:46pc">
             <div class="">
               <h2 class=""><?php echo htmlentities($row['posttitle']); ?></h2>
               <div class="d-flex justify-content-between" style="width: 12pc; right: 15pc; font-weight: 900;">
@@ -99,7 +99,7 @@ if ($result->num_rows > 0) {
               <p>
                 <div class="d-flex">
                 <b class="d-inline-block rounded-circle bg-dark text-red" style="width: 36px; height: 36px;"></b>
-                <p class="font-bold ml-2 text-bold fw-bold text-uppercase" style="font-weight: 700;"><?php echo htmlentities($row['postedBy']); ?> <br> <?php echo htmlentities($row['postingdate']); ?> <br>
+                <p class="font-bold ml-2 text-bold fw-bold " ><?php echo htmlentities($row['postedBy']); ?> <br> <?php echo htmlentities($row['postingdate']); ?> <br>
                 Views:<?php print $visits; ?></p>
                 
 
@@ -136,7 +136,7 @@ if ($result->num_rows > 0) {
               <p>
               </p>
               <hr />
-              <img class="img-fluid rounded" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>">
+              <img class="img-fluid rounded" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" style="width: 46pc;">
               <p class="card-text bold">
                 <?php
                 $pt = $row['postdetails'];

@@ -90,19 +90,19 @@ include('includes/config.php');
 
 <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>">
 
-<div class="d-flex card mb-4 shadow">
+<div class="d-flex card mb-4 ">
     <img class="card-img-top img-fluid" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" style="width: 100%; height: 200px; object-fit: cover;">
-    <div class="card-body">
+    <div class="p-2">
         <h2 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h2>
         <p class="card-text">
             <a class="badge bg-secondary text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
             <a class="badge bg-secondary text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
         </p>
         <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="btn btn-info">Read More &rarr;</a>
-    </div>
-    <div class="card-footer text-muted">
         Posted on <?php echo htmlentities($row['postingdate']); ?>
+
     </div>
+    
 </div>
 
 
@@ -141,6 +141,23 @@ include('includes/config.php');
 
       </div>
       <div class="col-lg-4" style="position: relative;left: 97px;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

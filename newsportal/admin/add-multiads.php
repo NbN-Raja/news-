@@ -7,21 +7,27 @@ if (strlen($_SESSION['login']) == 0) {
 } else {
 
     if (isset($_POST['submit_nav'])) {
-        $navs = $_FILES['footer'];
-        $link = $_POST['link'];
+        $nav = $_FILES['footer'];
+        $link= $_POST['link'];
     
-        // Loop through each uploaded image
-        for ($i = 0; $i < count($navs['name']); $i++) {
-            $nav_name = $navs['name'][$i];
-            $nav_tmp = $navs['tmp_name'][$i];
-            $nav_path = "postimages/" . $nav_name;
+        // File Upload
+        if ($nav['error'] === UPLOAD_ERR_OK) {
+            $image_name = $nav['name'];
+            $image_tmp = $nav['tmp_name'];
+            $image_path = "postimages/" . $image_name;
     
-            // File Upload
-            if ($navs['error'][$i] === UPLOAD_ERR_OK) {
+            // Extract file extension from the uploaded file
+            $file_extension = strtolower(strrchr($image_name, '.')); 
+    
+            $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif");
+    
+            // Check if the file has an allowed extension
+            if (in_array($file_extension, $allowed_extensions)) {
+                
                 // Move the uploaded file to the desired location
-                if (move_uploaded_file($nav_tmp, $nav_path)) {
+                if (move_uploaded_file($image_tmp, $image_path)) {
                     // File upload successful, insert a new record in the database
-                    $query = mysqli_query($con, "INSERT INTO tblads (footer, link) VALUES ('$nav_name', '$link')");
+                    $query = mysqli_query($con, "INSERT INTO tblads (footer,link) VALUES ('$image_name','$link')");
     
                     if ($query) {
                         $msg = "News Updated";
@@ -32,30 +38,54 @@ if (strlen($_SESSION['login']) == 0) {
                     $error = "Failed to move uploaded file. Please try again.";
                 }
             } else {
-                $error = "Error occurred during file upload. Please try again.";
+                $error= "Invalid file type. Please upload an image with one of the following extensions: .jpg, .jpeg, .png, .gif.";
             }
-        }
-    }
+            } else {
+            $error = "Error occurred during file upload. Please try again.";
+            }
+            }
     
 
 
 // Update here 
+// Update here 
 if (isset($_POST['update'])) {
-    $nav = $_FILES['footer']['name'];  // Extract the file name from the $_FILES array
     $id = $_POST['id'];
-    $links = $_POST['link'];
-$sql = "UPDATE tblads SET footer = '$nav', link= '$links' where id='$id'";
+    $link = $_POST['link'];
+    $navs = $_FILES['footer']['name'];  // Extract the file name from the $_FILES array
+    $nav_tmp = $_FILES['footer']['tmp_name'];
+    
+    $file_extension = strtolower(strrchr($navs, '.'));
+    $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif");
 
-// Execute the SQL statement
-if (mysqli_query($con, $sql)) {
-    echo "Record updated successfully.";
-} else {
-    echo "Error updating record: " . mysqli_error($con);
+    // Check if the file has an allowed extension
+    if (in_array($file_extension, $allowed_extensions)) {
+        
+        // Move the uploaded file to the desired location
+        $nav_path = "postimages/" . $navs;
+        if (move_uploaded_file($nav_tmp, $nav_path)) {
+            // File upload successful, update the record in the database
+            $stmt = $con->prepare("UPDATE tblads SET footer = ?, link= ? WHERE id = ?");
+            $stmt->bind_param("ssi", $navs, $link, $id);
+
+            if ($stmt->execute()) {
+                echo "Record updated successfully.";
+            } else {
+                echo "Error updating record: " . $stmt->error;
+            }
+            $stmt->close();
+        } else {
+            echo "Failed to move uploaded file. Please try again.";
+        }
+    } else {
+        echo "Invalid file type. Please upload an image with one of the following extensions: .jpg, .jpeg, .png, .gif.";
+    }
 }
-}
+
 
 
 ?>
+
 
 
 
@@ -186,9 +216,9 @@ if (mysqli_query($con, $sql)) {
                                                      
                                                     <input type="text" name="id" value="<?php echo $id ?>">
 
-                                                        <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit_nav">
+                                                        <!-- <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit_nav">
                                                             Submit
-                                                        </button>
+                                                        </button> -->
                                                         <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="update">
                                                             Update
                                                         </button>

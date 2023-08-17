@@ -95,3 +95,9 @@ include('includes/config.php');
 </body>
 
 </html>
+
+<style>
+  body{
+    color: black;
+  }
+</style>
