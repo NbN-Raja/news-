@@ -234,4 +234,8 @@ $(document).ready(function() {
         right: 2pc;
         background-color: aliceblue;
     }
+
+    .navbar-nav a{
+        text-transform: lowercase;
+    }
  </style>

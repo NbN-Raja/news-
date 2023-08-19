@@ -444,7 +444,34 @@ var nc_ev_api_id = 49320230817201; //-->
     </div>
 
 
- 
+    <?php
+$query = "SELECT tblposts.id as pid,tblposts.PostImage as postImage , tblposts.viewCounter as view, tblposts.PostTitle as posttitle,tblposts.PostDetails as postdetail,tblposts.PostingDate as postdate,tblcategory.CategoryName as catname FROM tblposts LEFT JOIN tblcategory ON tblcategory.id=tblposts.CategoryId LEFT JOIN tblsubcategory ON tblsubcategory.SubCategoryId=tblposts.SubCategoryId ORDER BY postdate DESC limit 5";
+$result = mysqli_query($con, $query);
+echo '<div class=" ml-5">';
+echo '<h1 class="mt-5"> Recent News </h1>';
+echo '<div class="row" style="margin-right:0.5rem">';
+
+if ($result) {
+  while ($row = mysqli_fetch_assoc($result)) {
+    // This will create a column that takes up 4 of the 12 bootstrap grid columns, thus, 3 cards in a row.
+echo '<div class="col-md-4 mb-4">';  
+echo '<div class="card">';
+echo '<img src="./admin/postimages/' . htmlentities($row['postImage']) . '" class="card-img-top" alt="Post Image">';
+echo '<div class="card-body">';
+echo '<h4 class="card-title">' . substr($row['posttitle'], 0, 20) . '</h4>';
+echo '<p class="card-text">' . substr($row['postdetail'], 0, 30) . '...</p>';
+echo '<p class="card-text"><strong>Views:</strong> ' . $row['view'] . '</p>';
+echo '<p class="card-text"><strong>Posted on:</strong> ' . $row['postdate'] . '</p>';
+echo '</div>';
+echo '</div>';
+echo '</div>';  // Close column
+
+  }
+}
+echo '</div>';  // Close row
+echo '</div>';  // Close container
+
+?>
 
     <!-- footer  -->
     <?php include('includes/footer.php')  ?>
@@ -456,7 +483,11 @@ var nc_ev_api_id = 49320230817201; //-->
 </html>
 
 <style>
-
+.card-img-top {
+    height: 200px;  /* Adjust the height as needed */
+    width: 100%;   /* Will occupy the entire width of the parent element (card) */
+    object-fit: cover; /* This ensures the image covers the space without distortion */
+}
     a{
         color: black;
     }
